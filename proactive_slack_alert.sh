@@ -80,8 +80,8 @@ function database_services {
 	mariadb_alert='0'
 	mysql_alert='0'
 	database_check=$(ls -al /etc/init.d/ | grep -Ei mysql | wc -l)
-	[ $database_check -gt 0 ] && database_type=$(mysql --version | grep -i  mariadb | wc -l)
-	[ $database_type -gt 0 ] && database_type="mariadb" || database_type="mysql"
+	[[ $database_check -gt 0 ]] && database_type=$(mysql --version | grep -i  mariadb | wc -l)
+	[[ $database_type -gt 0 ]] && database_type="mariadb" || database_type="mysql"
 
 	if [ "$database_type" == "mariadb" ]; then
 
