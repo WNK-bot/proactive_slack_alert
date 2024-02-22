@@ -52,7 +52,7 @@ function information {
 function which_stack {
 
 	webstack_alert='0'
-	webstack_name=$(netstat -nltp | egrep ':443 |:80 ' | sort -u | sed 's+: worker++' | awk '{print $NF}' | cut -d '/' -f 2 | uniq)
+	webstack_name=$(ps -p `netstat -nltp | egrep ':443 |:80 ' | sort -u | sed 's+: worker++' | sed 's+: master++' | awk '{print $NF}' | awk -F '/' '{print $1}' | uniq` -o cmd | awk 'NR==2 {print $1}' | sed 's+:++' | sed 's:/usr/sbin/::')
 	webstack_http=$(netstat -nltp | grep ':80 ' | sort -u | sed 's+: worker++' | awk '{print $NF}' | cut -d '/' -f 2)
 	webstack_https=$(netstat -nltp | grep ':443 ' | sort -u | sed 's+: worker++' | awk '{print $NF}' | cut -d '/' -f 2)
 	[[ "$webstack_name" == 'openlitespeed' ]] && webstack_name='lsws'
