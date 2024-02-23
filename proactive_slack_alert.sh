@@ -202,8 +202,8 @@ function redis_service {
     if [[ -n $redis_check ]]; then
 
 	    redis_status=$(systemctl status "$redis_check" | grep -Ei active | awk -F " " '{print $2}')
-
-        if [[ ! $redis_status == active ]]; then
+	    [[ redis_status == active ]] && redis_status='Up'
+        if [[ ! $redis_status == Up ]]; then
             redis_status='Down'
         fi
         
