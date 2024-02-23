@@ -7,9 +7,9 @@ function main {
 	which_stack
 	database_services
 	php_services
-	redis_service
-	memcache_service
-	elasticsearch_service
+	[[ $redis_service_check == on ]] && redis_service
+	[[ $memcache_service_check == on ]] && memcache_service
+        [[ $elasticsearch_service_check == on ]] && elasticsearch_service
 	disk_stats
 	slack_api
 
@@ -313,23 +313,29 @@ function server_stats {
 
 }
 
-while getopts ":c:m:r:i:b:I:s:w:" opt; do
-	case $opt in
+while getopts ":c:m:r:i:b:I:s:w:R:M:E:" opt; do
+  case $opt in
     c) cpu_threshold="$OPTARG"
     ;;
-		m) mem_threshold="$OPTARG"
-		;;
+    m) mem_threshold="$OPTARG"
+    ;;
     r) rs_space_threshold="$OPTARG"
     ;;
-		i) rs_inode_threshold="$OPTARG"
-		;;
-		b) bs_space_threshold="$OPTARG"
+    i) rs_inode_threshold="$OPTARG"
+    ;;
+    b) bs_space_threshold="$OPTARG"
     ;;
     I) bs_inode_threshold="$OPTARG"
     ;;
-		s) server_name="$OPTARG"
-		;;
+    s) server_name="$OPTARG"
+    ;;
     w) slack_webhook="$OPTARG"
+    ;;
+    R) redis_service_check="$OPTARG"
+    ;;
+    M) memcache_service_check="$OPTARG"
+    ;;
+    E) elasticsearch_service_check="$OPTARG"
     ;;
   esac
 done
