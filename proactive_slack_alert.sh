@@ -56,7 +56,7 @@ function which_stack {
 	webstack_http=$(netstat -nltp | grep ':80 ' | sort -u | sed 's+: worker++' | awk '{print $NF}' | cut -d '/' -f 2)
 	webstack_https=$(netstat -nltp | grep ':443 ' | sort -u | sed 's+: worker++' | awk '{print $NF}' | cut -d '/' -f 2)
 	webstack_status=$(systemctl status "$webstack_name" | grep active | awk '{print $2}')
- 	[[ $webstack_name='lsws' ]] && webstack_name == 'openlitespeed'
+ 	[[ $webstack_name == 'lsws' ]] && webstack_name='openlitespeed'
 	
 if [[ $webstack_status == 'active' ]]; then
 
