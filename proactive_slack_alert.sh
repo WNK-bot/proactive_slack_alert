@@ -220,7 +220,7 @@ function memcache_service {
 
     if [[ -n $memcache_check ]]; then
 
-        memcache_status=$(systemctl status "$memcached_check" | grep -Ei active | awk -F " " '{print $2}')
+        memcache_status=$(systemctl status "$memcache_check" | grep -Ei active | awk -F " " '{print $2}')
         [[ $memcache_status == active ]] && memcache_status='Up'
         if [[ ! $memcache_status == Up ]]; then
             memcache_status='Down'
